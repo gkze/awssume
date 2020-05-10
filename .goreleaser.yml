@@ -1,0 +1,44 @@
+---
+archives:
+- replacements:
+    386: i386
+    amd64: x86_64
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+before:
+  hooks:
+  - go mod tidy
+brews:
+- commit_author:
+    email: george.kontridze@gmail.com
+    name: gkze
+  description: Go package to switch between AWS IAM Roles
+  folder: Formula
+  github:
+    name: homebrew-gkze
+    owner: gkze
+  homepage: "https://github.com/gkze/roles"
+  test: "system  \"#{bin}/role -v\""
+builds:
+- binary: role
+  env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+  goarch:
+  - amd64
+  ldflags:
+  - -X main.Version={{ .Version }}
+  main: "./cmd/role/role.go"
+changelog:
+  filters:
+    exclude:
+    - "^docs:"
+    - "^test:"
+  sort: asc
+checksum:
+  name_template: checksums.txt
+signs:
+- artifacts: checksum
+snapshot:
+  name_template: "{{ .Tag }}-next"
