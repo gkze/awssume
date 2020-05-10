@@ -18,10 +18,10 @@ brews:
   github:
     name: homebrew-gkze
     owner: gkze
-  homepage: "https://github.com/gkze/roles"
-  test: "system  \"#{bin}/role -v\""
+  homepage: "https://github.com/gkze/awssume"
+  test: "system  \"#{bin}/awssume -v\""
 builds:
-- binary: role
+- binary: awssume
   env:
   - GO111MODULE=on
   - CGO_ENABLED=0
@@ -29,7 +29,7 @@ builds:
   - amd64
   ldflags:
   - -X main.Version={{ .Version }}
-  main: "./cmd/role/role.go"
+  main: "./cmd/awssume/awssume.go"
 changelog:
   filters:
     exclude:

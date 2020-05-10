@@ -17,8 +17,13 @@ import (
 // errCurrentUser is returned when the current used cannot be determined
 const errCurrentUser string = "error determining current user: %w"
 
-// errTooFewArguments is returned when there are not enough arguments passed
-var errTooFewArguments error = errors.New("not enough arguments provided")
+var (
+	// errTooFewArguments is returned when there are not enough arguments passed
+	errTooFewArguments error = errors.New("not enough arguments provided")
+
+	// Version is dynamically injected at build time
+	Version string
+)
 
 func main() {
 	rootCmd := cobra.Command{
@@ -29,6 +34,15 @@ func main() {
 				return cmd.Help()
 			}
 
+			return nil
+		},
+	}
+
+	versionCmd := &cobra.Command{
+		Use:   "version",
+		Short: "Display awssume version",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			fmt.Printf("awssume version %s\n", Version)
 			return nil
 		},
 	}
@@ -198,7 +212,7 @@ func main() {
 		"The duration of the STS Session when the Role is assumed",
 	)
 
-	rootCmd.AddCommand(listCmd, convertCmd, addCmd, execCmd)
+	rootCmd.AddCommand(versionCmd, listCmd, convertCmd, addCmd, execCmd)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
