@@ -140,12 +140,12 @@ func main() {
 
     cfg.ExecRole(
         "roleAlias", // Configured IAM Role alias
-        60 * 60      // 1 hour
-        "aws"        // command
+        60 * 60,     // 1 hour
+        "aws",       // command
         []string{    // arguments
             "sts",
-            "get-caller-identity"
-        }
+            "get-caller-identity",
+        },
     )
 }
 ```
