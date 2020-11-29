@@ -15,7 +15,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/arn"
-	"github.com/aws/aws-sdk-go-v2/aws/external"
+	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
 	"github.com/naoina/toml"
 	"github.com/spf13/afero"
@@ -282,7 +282,7 @@ type IConfig interface {
 	// ExecRole allows executing subprocesses by assuming the target Role
 	// through STS and providing the resulting credentials as environment
 	// variables
-	ExecRole(alias string, sessionDuration int64, command string, args []string) error
+	ExecRole(alias string, sessionDuration int32, command string, args []string) error
 }
 
 // Role struct implements the Role interface
@@ -366,7 +366,7 @@ func (c *Config) Save() error {
 	return afero.WriteFile(
 		c.fs,
 		strings.Join([]string{c.GetPath(), c.GetFormat().String()}, "."),
-		bytes, os.FileMode(0644),
+		bytes, os.FileMode(0o644),
 	)
 }
 
@@ -440,11 +440,11 @@ func (c *Config) UpdateRoleByAlias(alias string, r IRole) error {
 // variables
 func (c *Config) ExecRole(
 	alias string,
-	sessionDuration int64,
+	sessionDuration int32,
 	command string,
 	arguments []string,
 ) error {
-	awsCfg, err := external.LoadDefaultAWSConfig()
+	awsCfg, err := config.LoadDefaultConfig()
 	if err != nil {
 		return fmt.Errorf(ErrLoadAWSConfig, err)
 	}
@@ -454,11 +454,14 @@ func (c *Config) ExecRole(
 		return fmt.Errorf(ErrGetRoleByAlias, alias, err)
 	}
 
-	res, err := sts.New(awsCfg).AssumeRoleRequest(&sts.AssumeRoleInput{
-		DurationSeconds: aws.Int64(sessionDuration),
-		RoleArn:         aws.String(resRole.GetARN().String()),
-		RoleSessionName: aws.String(resRole.GetSessionName()),
-	}).Send(context.Background())
+	res, err := sts.NewFromConfig(awsCfg).AssumeRole(
+		context.Background(),
+		&sts.AssumeRoleInput{
+			DurationSeconds: aws.Int32(sessionDuration),
+			RoleArn:         aws.String(resRole.GetARN().String()),
+			RoleSessionName: aws.String(resRole.GetSessionName()),
+		},
+	)
 	if err != nil {
 		return fmt.Errorf(ErrSTSAssumeRole, resRole.GetARN(), err)
 	}
