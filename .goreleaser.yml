@@ -15,7 +15,7 @@ brews:
     name: gkze
   description: Go package to switch between AWS IAM Roles
   folder: Formula
-  github:
+  tap:
     name: homebrew-gkze
     owner: gkze
   homepage: "https://github.com/gkze/awssume"
