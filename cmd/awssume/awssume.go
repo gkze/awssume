@@ -164,7 +164,7 @@ func main() {
 		},
 	}
 
-	var sessionDuration int64
+	var sessionDuration int32
 	execCmd := &cobra.Command{
 		Use:     "exec",
 		Aliases: []string{"e", "ex", "exe"},
@@ -204,7 +204,7 @@ func main() {
 		},
 	}
 
-	execCmd.PersistentFlags().Int64VarP(
+	execCmd.PersistentFlags().Int32VarP(
 		&sessionDuration,
 		"session-duration",
 		"d",
