@@ -444,7 +444,7 @@ func (c *Config) ExecRole(
 	command string,
 	arguments []string,
 ) error {
-	awsCfg, err := config.LoadDefaultConfig()
+	awsCfg, err := config.LoadDefaultConfig(context.Background())
 	if err != nil {
 		return fmt.Errorf(ErrLoadAWSConfig, err)
 	}
