@@ -110,6 +110,7 @@ func main() {
     if err := cfg.Save(); err != nil {
         panic(err)
     }
+}
 ```
 
 or
