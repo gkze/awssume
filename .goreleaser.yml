@@ -6,9 +6,11 @@ archives:
     darwin: Darwin
     linux: Linux
     windows: Windows
+
 before:
   hooks:
   - go mod tidy
+
 brews:
 - commit_author:
     email: george.kontridze@gmail.com
@@ -20,6 +22,7 @@ brews:
     owner: gkze
   homepage: "https://github.com/gkze/awssume"
   test: "system  \"#{bin}/awssume -v\""
+
 builds:
 - binary: awssume
   env:
@@ -30,15 +33,21 @@ builds:
   ldflags:
   - -X main.Version={{ .Version }}
   main: "./cmd/awssume/awssume.go"
+
 changelog:
   filters:
     exclude:
     - "^docs:"
     - "^test:"
   sort: asc
+
 checksum:
   name_template: checksums.txt
+
 signs:
 - artifacts: checksum
+  stdin: '{{ .Env.GPG_PASSPHRASE }}'
+
+
 snapshot:
   name_template: "{{ .Tag }}-next"
