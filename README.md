@@ -4,8 +4,8 @@
 [![GoReport Widget]][GoReport Status]
 [![GoDocWidget]][GoDocReference]
 
-[Actions Test Workflow Status]: https://github.com/gkze/awssume/actions?query=workflow%3Aci
-[Actions Test Workflow Widget]: https://github.com/gkze/awssume/workflows/ci/badge.svg
+[Actions Test Workflow Status]: https://github.com/gkze/awssume/actions?query=workflow%3ACI
+[Actions Test Workflow Widget]: https://github.com/gkze/awssume/workflows/CI/badge.svg
 
 [GoReport Status]: https://goreportcard.com/report/github.com/gkze/awssume
 [GoReport Widget]: https://goreportcard.com/badge/github.com/gkze/awssume
