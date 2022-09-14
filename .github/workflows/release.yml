@@ -36,5 +36,5 @@ jobs:
       - run: make release
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS }}
-          GPG_PASSWORD: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
