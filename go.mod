@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/aws/aws-sdk-go-v2 v1.17.3
 	github.com/aws/aws-sdk-go-v2/config v1.18.5
-	github.com/aws/aws-sdk-go-v2/service/sts v1.17.7
+	github.com/aws/aws-sdk-go-v2/service/sts v1.18.2
 	github.com/naoina/toml v0.1.1
 	github.com/spf13/afero v1.9.3
 	github.com/spf13/cobra v1.6.1
